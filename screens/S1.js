@@ -1,29 +1,27 @@
 import React, {  useState,useCallback   } from 'react'
 import { StyleSheet, Text, View,TextInput,Button,Alert,Pressable,ScrollView,ImageBackground } from 'react-native';
 import axios from 'axios';
-import  DocumentPickerOptions  from 'react-native-document-picker';
-import { useDispatch, useSelector } from 'react-redux';
 import { setTemp } from '../store/messageSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 const S1 = ({ navigation })=>{
     const dispatch = useDispatch();
     const [locate,setLocation]=useState("");
-const [fileResponse,setFileResponse]=useState([])
+    
     const { temperature,humidity,location,date,wind } = useSelector((state) => state.reducer.message);
     const [currentTemp,setCurrentTemp]=useState('null');
     const [currentHumidity,setHumidity]=useState('null');
     const [wmph,setwmph]=useState('null');
+   
     const d=new Date();
-    const handleDocumentSelection = useCallback(async () => {
-      try {
-        const response = await DocumentPickerOptions.pick({
-          presentationStyle: 'fullScreen',
-        });
-        setFileResponse(response);
-      } catch (err) {
-        console.warn(err);
-      }
-    }, []);
+    function handleChange(event) {
+      setFile(event.target.files[0]);
+  }
+   
+  
+
+
     const data ={
       temperature:currentTemp,
       humidity:currentHumidity,
@@ -107,18 +105,18 @@ const [fileResponse,setFileResponse]=useState([])
 
         </Text>
       </View>
-      <View>
-      {fileResponse.map((file, index) => (
-        <Text
-        key={index.toString()}
-        style={styles.uri}
-        numberOfLines={1}
-        ellipsizeMode={'middle'}>
-          
-          {file?.uri}
-        </Text>
-      ))}
-            <Button title="Select 📑" onPress={handleDocumentSelection} />
+      <View style={styles.layout}>
+      
+
+             <Button
+             title="Upload Files"
+             onPress={()=>{
+              navigation.navigate('Screen2')
+             }
+              
+             }
+             />
+             
       </View>
       
       
@@ -210,6 +208,7 @@ const styles = StyleSheet.create({
       fontSize:25,
       fontStyle:'italic',
       padding:10,
+      color:'grey'
 
 
       

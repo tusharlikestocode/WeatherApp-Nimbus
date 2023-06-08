@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View,TextInput,Button,Alert,Pressable,ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
 const S3 = ({navigation})=>{
 
   const { temperature,humidity,wind } = useSelector((state) => state.reducer.message);
